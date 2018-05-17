@@ -80,8 +80,10 @@ module.exports = (uri, output, opts) => {
 		rejectUnauthorized: process.env.npm_config_strict_ssl !== 'false'
 	}, opts);
 
+  const progress_callback = opts.progress;
+
 	const agent = caw(opts.proxy, {protocol});
-	const stream = got.stream(uri, Object.assign({agent}, opts))
+	var _stream = got.stream(uri, Object.assign({agent}, opts))
 		.on('redirect', (response, nextOptions) => {
 			const redirectProtocol = getProtocolFromUri(nextOptions.href);
 			if (redirectProtocol && redirectProtocol !== protocol) {
@@ -89,6 +91,11 @@ module.exports = (uri, output, opts) => {
 			}
 		});
 
+  if (progress_callback) {
+    _stream.on('downloadProgress', progress_callback);
+  }
+
+  const stream = _stream;
 	const promise = pEvent(stream, 'response').then(res => {
 		const encoding = opts.encoding === null ? 'buffer' : opts.encoding;
 		return Promise.all([getStream(stream, {encoding}), res]);

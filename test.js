@@ -107,3 +107,12 @@ test('handle filename from file type', async t => {
 	t.true(await pathExists(path.join(__dirname, 'filetype.zip')));
 	await fsP.unlink(path.join(__dirname, 'filetype.zip'));
 });
+
+test('download a very large file with progress callback', async t => {
+  var progress_updated = false;
+  const progress = progress => {
+    progress_updated = true;
+  };
+  t.is((await getStream.buffer(m('http://foo.bar/large.bin', {progress: progress}))).length, 7928260);
+  t.true(progress_updated);
+});

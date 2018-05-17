@@ -1,19 +1,19 @@
 {
   "name": "download",
-  "version": "7.0.0",
+  "version": "7.1.0",
   "description": "Download and extract files",
   "license": "MIT",
-  "repository": "kevva/download",
+  "repository": "golden0080/download",
   "author": {
-    "email": "kevinmartensson@gmail.com",
-    "name": "Kevin Mårtensson",
-    "url": "github.com/kevva"
+    "email": "golden0080gba@gmail.com",
+    "name": "GH",
+    "url": "github.com/golden0080"
   },
   "engines": {
     "node": ">=6"
   },
   "scripts": {
-    "test": "xo && ava"
+    "test": "ava"
   },
   "files": [
     "index.js"
